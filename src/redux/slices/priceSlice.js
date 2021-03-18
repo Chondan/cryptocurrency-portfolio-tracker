@@ -10,7 +10,7 @@ const fetchPrice = createAsyncThunk('price/fetchPrice', async () => {
 
 const priceSlice = createSlice({
 	name: 'price',
-	initialState: {},
+	initialState: null,
 	reducers: {},
 	extraReducers: builder => {
 		builder

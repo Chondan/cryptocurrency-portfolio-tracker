@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import './App.css';
 
 // Components 
@@ -11,7 +11,7 @@ import { supportedCoins } from './utils/mainnetPairsUSD';
 import { getInterval } from './utils/interval';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchPrice } from './redux/slices/priceSlice';
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
   // const [currency, setCurrency] = useState('usd'); // open for extend
   const currency = 'usd';
   const dispatch = useDispatch();
+  const prices = useSelector(state => state.price);
 
   // ----- COIN -----
   const addCoin = (coin, initialAmount=0) => {
@@ -61,10 +62,17 @@ function App() {
        <h1 className="app-name">Portfolio Tracker</h1>
        <div className="layout">
          <Status portfolio={portfolio} currency={currency} />
-         <Selector options={supportedCoins} onListClick={addCoin} portfolio={portfolio} />
-         <Portfolio portfolio={portfolio} currency={currency} 
-           handleAmountChange={handleAmountChange} removeCoin={removeCoin}
-         />
+         { prices ? 
+           <Fragment>
+             <Selector options={supportedCoins} onListClick={addCoin} portfolio={portfolio} />
+             <Portfolio portfolio={portfolio} currency={currency} 
+               handleAmountChange={handleAmountChange} removeCoin={removeCoin}
+             />
+           </Fragment> :
+           <div className="loading-status">Loading</div>
+         }
+         
+         
        </div>
     </div>
   );

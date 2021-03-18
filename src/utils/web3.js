@@ -4,7 +4,7 @@ const Web3 = require('web3');
 const { supportedCoins, mainnetPairsUSD } = require('./mainnetPairsUSD');
 
 // Setup
-const web3 = new Web3(`https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_PROJECT_ID}`);
+const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
 const aggregatorV3InterfaceABI = [
 	{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},
 	{"inputs":[],"name":"description","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},

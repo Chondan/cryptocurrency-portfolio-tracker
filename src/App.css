@@ -136,3 +136,8 @@ td.coin-input button {
     width: 100%;
   }
 }
+
+/* LOADING */
+.loading-status {
+  text-align: center;
+}

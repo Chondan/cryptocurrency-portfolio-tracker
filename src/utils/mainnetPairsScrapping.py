@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import os
 
 headers = {
     'Access-Control-Allow-Origin': '*',
@@ -13,7 +14,10 @@ url = "https://docs.chain.link/docs/ethereum-addresses"
 req = requests.get(url, headers)
 soup = BeautifulSoup(req.content, 'html.parser')
 
-mainnet = soup.findAll('div', { 'class': 'rdmd-table'})[0]
+networks = soup.findAll('div', { 'class': 'rdmd-table'})
+# return array of networks -> [Mainnet, Kovan, Rinkeby]
+
+mainnet = networks[0]
 mainnetBody = mainnet.find_all('tbody')[0]
 mainnetRows = mainnetBody.find_all('tr')
 
@@ -25,6 +29,8 @@ for row in mainnetRows:
 	proxyTxt = proxyElem.text
 	mainnetDict[pairTxt] = proxyTxt
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 # Export to JSON file
-with open('mainnetPairs.json', 'w') as outfile:
+with open(f'{dir_path}/mainnetPairs.json', 'w') as outfile:
 	json.dump(mainnetDict, outfile)
