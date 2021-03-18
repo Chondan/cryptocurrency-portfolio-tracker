@@ -1,2 +1,1 @@
-python3 mainnetPairsScrapping.py;
-node mainnetPairsUSD.js;
+python3 contractsScrapping.py mainnet;

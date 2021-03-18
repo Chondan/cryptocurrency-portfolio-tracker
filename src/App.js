@@ -6,8 +6,7 @@ import './App.css';
 import { Status, Selector, Portfolio } from './components';
 
 // Utils 
-// import { supportedCoins } from './utils/coin';
-import { supportedCoins } from './utils/mainnetPairsUSD';
+import { supportedCoins } from './utils/contract';
 import { getInterval } from './utils/interval';
 
 // Redux

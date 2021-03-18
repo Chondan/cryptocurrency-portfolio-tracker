@@ -1,20 +1,20 @@
-const mainnet = require('./mainnetPairs.json');
+const contractAddresses = require('./contracts.json');
 const { nameOf } = require('crypto-symbol');
 
 // Filter 'XXX / USD'
-const mainnetPairsUSD = {};
+const contracts = {};
 const supportedCoins = [];
-for (const key of Object.keys(mainnet)) {
+for (const key of Object.keys(contractAddresses)) {
 	const [a, b] = key.split(' / ');
 	if (!b) continue;
 	if (b === 'USD') {
 		const coinName = nameOf(a);
 		if (coinName !== undefined) {
-			mainnetPairsUSD[coinName] = mainnet[key];
+			contracts[coinName] = contractAddresses[key];
 			supportedCoins.push(coinName);
 		}
 	}
 }
-// console.log(mainnetPairsUSD);
+// console.log(contracts);
 
-export { mainnetPairsUSD, supportedCoins };
+export { contracts, supportedCoins };

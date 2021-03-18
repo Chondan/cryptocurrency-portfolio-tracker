@@ -1,7 +1,7 @@
 const Web3 = require('web3');
 
 // Mainnet Pairs
-const { supportedCoins, mainnetPairsUSD } = require('./mainnetPairsUSD');
+const { supportedCoins, contracts } = require('./contract');
 
 // Setup
 const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
@@ -18,7 +18,7 @@ const getPriceFeedPromise = address => {
 }
 
 // PriceFeedPromises
-const getPriceFeedPromises = (pairs=mainnetPairsUSD) => {
+const getPriceFeedPromises = (pairs=contracts) => {
 	const priceFeedPromises = [];
 	Object.keys(pairs).forEach((key, index) => {
 		const promise = getPriceFeedPromise(pairs[key]);
@@ -38,11 +38,11 @@ const transformPricesShape = (prices) => {
 }
 
 const fetchingPrices = async () => {
-	const priceFeedPromises = getPriceFeedPromises(mainnetPairsUSD);
+	const priceFeedPromises = getPriceFeedPromises(contracts);
 	const prices = await Promise.all(
 		priceFeedPromises.map(async ({ coinName, priceFeedPromise }) => {
 			const { answer: price } = await priceFeedPromise;
-			return { coinName, usd: price / 1e8 }; // convert to 8 decimal points
+			return { coinName, usd: price / 1e8 };
 		})
 	)
 	return transformPricesShape(prices);
