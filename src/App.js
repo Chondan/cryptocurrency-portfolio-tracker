@@ -6,7 +6,9 @@ import './App.css';
 import { Status, Selector, Portfolio } from './components';
 
 // Utils 
-import { supportedCoins } from './utils/coin';
+// import { supportedCoins } from './utils/coin';
+import { supportedCoins } from './utils/mainnetPairsUSD';
+import { getInterval } from './utils/interval';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -15,7 +17,8 @@ import { fetchPrice } from './redux/slices/priceSlice';
 function App() {
 
   const [portfolio, setPortfolio] = useState([]);
-  const [currency, setCurrency] = useState('usd'); // open for extend
+  // const [currency, setCurrency] = useState('usd'); // open for extend
+  const currency = 'usd';
   const dispatch = useDispatch();
 
   // ----- COIN -----
@@ -46,11 +49,9 @@ function App() {
 
   useEffect(() => {
 
-    dispatch(fetchPrice()); // fetching first round
-
-    const updatePrice = setInterval(async () => {
-     dispatch(fetchPrice());
-    },  1000); // fetches data in an interval basis in 1+x
+    const updatePrice = getInterval(() => {
+      dispatch(fetchPrice());
+    });
 
     return () => clearInterval(updatePrice); // Clean up
   }, [dispatch]);

@@ -33,3 +33,21 @@
 - Card 
 	1. Total assets (money in USD)
 	2. Percentage changed
+
+## Abstraction
+
+### Prices Shape
+
+``` js
+{
+	[coinSymbol]: { [currency]: price },
+}
+ ```
+
+### Supported Coins Shape
+
+``` js 
+[
+	coinSymbol,
+]
+```

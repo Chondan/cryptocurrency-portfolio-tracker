@@ -96,7 +96,6 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  overflow: auto;
 }
 td, th {
   border: 1px solid #ddd;
@@ -127,4 +126,13 @@ td.coin-input input {
 }
 td.coin-input button {
   width: 30%;
+}
+
+@media (max-width: 600px) {
+  .status-section {
+    flex-direction: column;
+  }
+  .card {
+    width: 100%;
+  }
 }

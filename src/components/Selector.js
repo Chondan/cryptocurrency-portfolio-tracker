@@ -16,7 +16,7 @@ const Selector = ({
 	return (
 		<div className="section selector-section">
 			<Dropdown 
-				options={options.filter(option => option.search(searchValue) !== -1).filter(option => !portfolio.some(p => p.name === option))} 
+				options={options.filter(option => option.toLowerCase().search(searchValue.toLowerCase()) !== -1).filter(option => !portfolio.some(p => p.name === option))} 
 				value={searchValue} handleInputChange={handleInputChange} 
 				onListClick={onListClick} portfolio={portfolio}
 			/>

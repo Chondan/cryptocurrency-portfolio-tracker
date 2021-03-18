@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Utils
-import { fetchingPrice } from '../../utils/api';
-import { supportedCoins } from '../../utils/coin';
+import fetchingPrice from '../../utils/web3';
 
 const fetchPrice = createAsyncThunk('price/fetchPrice', async () => {
-	const response = await fetchingPrice(supportedCoins);
-	return response.data;
+	const prices = await fetchingPrice();
+	return prices;
 });
 
 const priceSlice = createSlice({
