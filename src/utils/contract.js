@@ -1,20 +1,22 @@
-const contractAddresses = require('./contracts.json');
+const contractAddresses = require(`./contractsJSON/${process.env.REACT_APP_NETWORK}.json`);
 const { nameOf } = require('crypto-symbol');
 
 // Filter 'XXX / USD'
-const contracts = {};
-const supportedCoins = [];
-for (const key of Object.keys(contractAddresses)) {
-	const [a, b] = key.split(' / ');
-	if (!b) continue;
-	if (b === 'USD') {
-		const coinName = nameOf(a);
-		if (coinName !== undefined) {
-			contracts[coinName] = contractAddresses[key];
-			supportedCoins.push(coinName);
+const getContracts = data => {
+	const contracts = {};
+	for (const key of Object.keys(data)) {
+		const [a, b] = key.split(' / ');
+		if (!b) continue;
+		if (b === 'USD') {
+			const coinName = nameOf(a);
+			if (coinName !== undefined) {
+				contracts[coinName] = data[key];
+			}
 		}
 	}
+	return contracts;
 }
-// console.log(contracts);
+const contracts = getContracts(contractAddresses);
+const supportedCoins = Object.keys(contracts);
 
 export { contracts, supportedCoins };

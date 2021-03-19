@@ -1,7 +1,7 @@
 const Web3 = require('web3');
 
 // Mainnet Pairs
-const { supportedCoins, contracts } = require('./contract');
+const { contracts } = require('./contract');
 
 // Setup
 const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
@@ -18,11 +18,11 @@ const getPriceFeedPromise = address => {
 }
 
 // PriceFeedPromises
-const getPriceFeedPromises = (pairs=contracts) => {
+const getPriceFeedPromises = (contracts) => {
 	const priceFeedPromises = [];
-	Object.keys(pairs).forEach((key, index) => {
-		const promise = getPriceFeedPromise(pairs[key]);
-		priceFeedPromises.push({ coinName: supportedCoins[index], priceFeedPromise: promise });
+	Object.keys(contracts).forEach((key, index) => {
+		const promise = getPriceFeedPromise(contracts[key]);
+		priceFeedPromises.push({ coinName: key, priceFeedPromise: promise });
 	});
 	return priceFeedPromises;
 }

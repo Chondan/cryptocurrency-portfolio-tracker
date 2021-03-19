@@ -33,11 +33,15 @@ def getContracts(network):
 def generateJSON(data, filename):
     # Export to JSON file
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(f'{dir_path}/{filename}', 'w') as outfile:
+    destination_path = os.path.join(dir_path, 'contractsJSON')
+    try:
+        os.mkdir(destination_path)
+    except OSError as error:
+        pass
+    with open(f'{destination_path}/{filename}', 'w') as outfile:
     	json.dump(data, outfile)
 
 # Networks
 networksDict = { 'mainnet': 0, 'kovan': 1, 'rinkeby': 2 }
-[_, networkName] = sys.argv
-
-generateJSON(getContracts(networks[networksDict[networkName]]), 'contracts.json')
+for networkName in networksDict.keys():
+    generateJSON(getContracts(networks[networksDict[networkName]]), f'{networkName}.json')
